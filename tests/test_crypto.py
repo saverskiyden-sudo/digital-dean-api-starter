@@ -87,5 +87,103 @@ def test_process_key_has_no_secret_in_repr():
     assert "nonces=" not in repr(value)
 
 
-# TODO: доповніть великими повідомленнями, усіченим тегом, невідомою бібліотекою.
-# TODO: перевірте конфігурацію лічильника і відсутність повторів між записами.
+# --- Доповнення студента ---------------------------------------------------
+LARGE = bytes(range(256)) * 4096  # 1 МіБ двійкових даних
+
+
+@pytest.mark.parametrize("backend", BACKENDS)
+@pytest.mark.parametrize("algorithm,key_size", PROFILES)
+def test_round_trip_large_binary_message(backend, algorithm, key_size):
+    key, nonce, aad = token_bytes(key_size), bytes(12), b"synthetic-context"
+    ct, tag = seal_bytes(backend, algorithm, key, nonce, LARGE, aad)
+    assert len(ct) == len(LARGE)
+    assert open_bytes(backend, algorithm, key, nonce, ct, tag, aad) == LARGE
+
+
+@pytest.mark.parametrize("backend", BACKENDS)
+@pytest.mark.parametrize("algorithm,key_size", PROFILES)
+def test_different_nonce_is_rejected(backend, algorithm, key_size):
+    # Таблиця 6, сценарій 6: інше 12-байтове значення.
+    key, aad = token_bytes(key_size), b"synthetic-context"
+    ct, tag = seal_bytes(backend, algorithm, key, bytes(12), b"demo", aad)
+    other = (1).to_bytes(12, "big")
+    with pytest.raises(CiphertextError):
+        open_bytes(backend, algorithm, key, other, ct, tag, aad)
+
+
+@pytest.mark.parametrize("backend", BACKENDS)
+@pytest.mark.parametrize("algorithm,key_size", PROFILES)
+@pytest.mark.parametrize("tag_size", (0, 8, 15, 17))
+def test_truncated_or_extended_tag_is_rejected(backend, algorithm, key_size, tag_size):
+    key, nonce, aad = token_bytes(key_size), bytes(12), b"synthetic-context"
+    ct, tag = seal_bytes(backend, algorithm, key, nonce, b"demo", aad)
+    bad_tag = tag[:tag_size] if tag_size < 16 else tag + bytes(tag_size - 16)
+    with pytest.raises(CiphertextError):
+        open_bytes(backend, algorithm, key, nonce, ct, bad_tag, aad)
+
+
+@pytest.mark.parametrize("algorithm,key_size", PROFILES)
+def test_unknown_backend_is_rejected_without_fallback(algorithm, key_size):
+    args = (algorithm, token_bytes(key_size), bytes(12))
+    with pytest.raises(ValueError):
+        seal_bytes("openssl-cli", *args, b"demo", b"aad")
+    with pytest.raises(ValueError):
+        open_bytes("openssl-cli", *args, b"x", bytes(16), b"aad")
+
+
+@pytest.mark.parametrize("backend", BACKENDS)
+def test_invalid_key_length_is_rejected_by_adapter(backend):
+    with pytest.raises(ValueError):
+        seal_bytes(backend, "AES-256-GCM", bytes(16), bytes(12), b"demo", b"aad")
+
+
+def test_validate_profile_accepts_all_profiles():
+    for algorithm, key_size in PROFILES:
+        validate_profile(algorithm, bytes(key_size), bytes(12))
+
+
+def test_nonce_sequence_is_monotonic_and_unique_sequentially():
+    seq = NonceSequence(limit=500)
+    values = [seq.next() for _ in range(500)]
+    assert values == [i.to_bytes(12, "big") for i in range(500)]
+    assert len(set(values)) == 500
+
+
+@pytest.mark.parametrize("limit", (0, -1, 1_000_001, 1.5, True, "10", None))
+def test_nonce_sequence_rejects_invalid_limit(limit):
+    with pytest.raises(ValueError):
+        NonceSequence(limit=limit)
+
+
+def test_exhausted_counter_does_not_reset():
+    seq = NonceSequence(limit=2)
+    seq.next()
+    seq.next()
+    for _ in range(3):
+        with pytest.raises(RuntimeError):
+            seq.next()
+
+
+def test_process_keys_are_independent():
+    first, second = create_process_key(), create_process_key()
+    assert first.key != second.key
+    assert first.key_id != second.key_id
+    assert first.nonces is not second.nonces
+
+
+def test_note_aad_is_canonical_and_covers_every_field():
+    base = ("s", "n", "AES-256-GCM", "k")
+    reference = note_aad(*base, "general")
+    assert reference == note_aad(*base, "general")
+    assert reference == (
+        b'{"algorithm":"AES-256-GCM","category":"general","key_id":"k",'
+        b'"note_id":"n","student_id":"s","version":1}'
+    )
+    variants = [
+        note_aad("x", "n", "AES-256-GCM", "k", "general"),
+        note_aad("s", "x", "AES-256-GCM", "k", "general"),
+        note_aad("s", "n", "AES-128-GCM", "k", "general"),
+        note_aad("s", "n", "AES-256-GCM", "x", "general"),
+        note_aad(*base, "academic"),
+    ]
+    assert all(value != reference for value in variants)
