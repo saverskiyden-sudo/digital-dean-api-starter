@@ -1,11 +1,13 @@
 from fastapi import FastAPI
 
+from app.api.crypto_lab import router as crypto_lab_router
+from app.api.secure_notes import router as secure_notes_router
 from app.api.students import router as students_router
 
 
 app = FastAPI(
     title="Digital Dean API",
-    version="0.1.0",
+    version="0.2.0",
     description="Навчальний API системи «Цифровий деканат»",
 )
 
@@ -17,3 +19,5 @@ def health() -> dict[str, str]:
 
 
 app.include_router(students_router)
+app.include_router(secure_notes_router)
+app.include_router(crypto_lab_router)
