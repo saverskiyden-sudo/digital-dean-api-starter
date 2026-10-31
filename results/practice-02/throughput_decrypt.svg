@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="860" height="520" viewBox="0 0 860 520" font-family="Arial, sans-serif" font-size="12">
+<rect width="860" height="520" fill="#ffffff"/>
+<text x="80" y="28" font-size="16" font-weight="bold">Перевірене розшифрування: пропускна здатність за розміром повідомлення</text>
+<line x1="80" y1="450.0" x2="610" y2="450.0" stroke="#dddddd"/>
+<text x="72" y="454.0" text-anchor="end">10</text>
+<line x1="80" y1="316.7" x2="610" y2="316.7" stroke="#dddddd"/>
+<text x="72" y="320.7" text-anchor="end">100</text>
+<line x1="80" y1="183.3" x2="610" y2="183.3" stroke="#dddddd"/>
+<text x="72" y="187.3" text-anchor="end">1000</text>
+<line x1="80" y1="50.0" x2="610" y2="50.0" stroke="#dddddd"/>
+<text x="72" y="54.0" text-anchor="end">10000</text>
+<line x1="168.3" y1="50" x2="168.3" y2="450" stroke="#eeeeee"/>
+<text x="168.3" y="470" text-anchor="middle">1 КіБ</text>
+<line x1="345.0" y1="50" x2="345.0" y2="450" stroke="#eeeeee"/>
+<text x="345.0" y="470" text-anchor="middle">64 КіБ</text>
+<line x1="521.7" y1="50" x2="521.7" y2="450" stroke="#eeeeee"/>
+<text x="521.7" y="470" text-anchor="middle">1024 КіБ</text>
+<rect x="80" y="50" width="530" height="400" fill="none" stroke="#444444"/>
+<text x="345.0" y="502" text-anchor="middle">Розмір початкового повідомлення</text>
+<text transform="translate(20 250.0) rotate(-90)" text-anchor="middle">МіБ/с (логарифмічна шкала)</text>
+<line x1="155.8" y1="262.8" x2="155.8" y2="266.8" stroke="#1f77b4" stroke-width="1.5"/>
+<line x1="152.8" y1="262.8" x2="158.8" y2="262.8" stroke="#1f77b4"/>
+<line x1="152.8" y1="266.8" x2="158.8" y2="266.8" stroke="#1f77b4"/>
+<line x1="332.5" y1="115.6" x2="332.5" y2="117.2" stroke="#1f77b4" stroke-width="1.5"/>
+<line x1="329.5" y1="115.6" x2="335.5" y2="115.6" stroke="#1f77b4"/>
+<line x1="329.5" y1="117.2" x2="335.5" y2="117.2" stroke="#1f77b4"/>
+<line x1="509.2" y1="149.0" x2="509.2" y2="150.8" stroke="#1f77b4" stroke-width="1.5"/>
+<line x1="506.2" y1="149.0" x2="512.2" y2="149.0" stroke="#1f77b4"/>
+<line x1="506.2" y1="150.8" x2="512.2" y2="150.8" stroke="#1f77b4"/>
+<polyline points="155.8,264.5 332.5,116.1 509.2,150.4" fill="none" stroke="#1f77b4" stroke-width="2"/>
+<circle cx="155.8" cy="264.5" r="3.5" fill="#1f77b4"/>
+<circle cx="332.5" cy="116.1" r="3.5" fill="#1f77b4"/>
+<circle cx="509.2" cy="150.4" r="3.5" fill="#1f77b4"/>
+<line x1="160.8" y1="262.3" x2="160.8" y2="274.9" stroke="#2ca02c" stroke-width="1.5"/>
+<line x1="157.8" y1="262.3" x2="163.8" y2="262.3" stroke="#2ca02c"/>
+<line x1="157.8" y1="274.9" x2="163.8" y2="274.9" stroke="#2ca02c"/>
+<line x1="337.5" y1="118.5" x2="337.5" y2="120.4" stroke="#2ca02c" stroke-width="1.5"/>
+<line x1="334.5" y1="118.5" x2="340.5" y2="118.5" stroke="#2ca02c"/>
+<line x1="334.5" y1="120.4" x2="340.5" y2="120.4" stroke="#2ca02c"/>
+<line x1="514.2" y1="150.2" x2="514.2" y2="154.2" stroke="#2ca02c" stroke-width="1.5"/>
+<line x1="511.2" y1="150.2" x2="517.2" y2="150.2" stroke="#2ca02c"/>
+<line x1="511.2" y1="154.2" x2="517.2" y2="154.2" stroke="#2ca02c"/>
+<polyline points="160.8,266.6 337.5,120.0 514.2,152.2" fill="none" stroke="#2ca02c" stroke-width="2"/>
+<circle cx="160.8" cy="266.6" r="3.5" fill="#2ca02c"/>
+<circle cx="337.5" cy="120.0" r="3.5" fill="#2ca02c"/>
+<circle cx="514.2" cy="152.2" r="3.5" fill="#2ca02c"/>
+<line x1="165.8" y1="263.7" x2="165.8" y2="267.9" stroke="#9467bd" stroke-width="1.5"/>
+<line x1="162.8" y1="263.7" x2="168.8" y2="263.7" stroke="#9467bd"/>
+<line x1="162.8" y1="267.9" x2="168.8" y2="267.9" stroke="#9467bd"/>
+<line x1="342.5" y1="141.9" x2="342.5" y2="147.0" stroke="#9467bd" stroke-width="1.5"/>
+<line x1="339.5" y1="141.9" x2="345.5" y2="141.9" stroke="#9467bd"/>
+<line x1="339.5" y1="147.0" x2="345.5" y2="147.0" stroke="#9467bd"/>
+<line x1="519.2" y1="164.9" x2="519.2" y2="166.7" stroke="#9467bd" stroke-width="1.5"/>
+<line x1="516.2" y1="164.9" x2="522.2" y2="164.9" stroke="#9467bd"/>
+<line x1="516.2" y1="166.7" x2="522.2" y2="166.7" stroke="#9467bd"/>
+<polyline points="165.8,265.4 342.5,142.0 519.2,166.2" fill="none" stroke="#9467bd" stroke-width="2"/>
+<circle cx="165.8" cy="265.4" r="3.5" fill="#9467bd"/>
+<circle cx="342.5" cy="142.0" r="3.5" fill="#9467bd"/>
+<circle cx="519.2" cy="166.2" r="3.5" fill="#9467bd"/>
+<line x1="170.8" y1="419.7" x2="170.8" y2="422.2" stroke="#ff7f0e" stroke-width="1.5"/>
+<line x1="167.8" y1="419.7" x2="173.8" y2="419.7" stroke="#ff7f0e"/>
+<line x1="167.8" y1="422.2" x2="173.8" y2="422.2" stroke="#ff7f0e"/>
+<line x1="347.5" y1="201.9" x2="347.5" y2="202.7" stroke="#ff7f0e" stroke-width="1.5"/>
+<line x1="344.5" y1="201.9" x2="350.5" y2="201.9" stroke="#ff7f0e"/>
+<line x1="344.5" y1="202.7" x2="350.5" y2="202.7" stroke="#ff7f0e"/>
+<line x1="524.2" y1="169.4" x2="524.2" y2="176.3" stroke="#ff7f0e" stroke-width="1.5"/>
+<line x1="521.2" y1="169.4" x2="527.2" y2="169.4" stroke="#ff7f0e"/>
+<line x1="521.2" y1="176.3" x2="527.2" y2="176.3" stroke="#ff7f0e"/>
+<polyline points="170.8,421.2 347.5,202.2 524.2,172.1" fill="none" stroke="#ff7f0e" stroke-width="2" stroke-dasharray="6 4"/>
+<circle cx="170.8" cy="421.2" r="3.5" fill="#ff7f0e"/>
+<circle cx="347.5" cy="202.2" r="3.5" fill="#ff7f0e"/>
+<circle cx="524.2" cy="172.1" r="3.5" fill="#ff7f0e"/>
+<line x1="175.8" y1="419.6" x2="175.8" y2="422.2" stroke="#d62728" stroke-width="1.5"/>
+<line x1="172.8" y1="419.6" x2="178.8" y2="419.6" stroke="#d62728"/>
+<line x1="172.8" y1="422.2" x2="178.8" y2="422.2" stroke="#d62728"/>
+<line x1="352.5" y1="203.7" x2="352.5" y2="205.4" stroke="#d62728" stroke-width="1.5"/>
+<line x1="349.5" y1="203.7" x2="355.5" y2="203.7" stroke="#d62728"/>
+<line x1="349.5" y1="205.4" x2="355.5" y2="205.4" stroke="#d62728"/>
+<line x1="529.2" y1="174.5" x2="529.2" y2="180.4" stroke="#d62728" stroke-width="1.5"/>
+<line x1="526.2" y1="174.5" x2="532.2" y2="174.5" stroke="#d62728"/>
+<line x1="526.2" y1="180.4" x2="532.2" y2="180.4" stroke="#d62728"/>
+<polyline points="175.8,421.4 352.5,204.3 529.2,175.3" fill="none" stroke="#d62728" stroke-width="2" stroke-dasharray="6 4"/>
+<circle cx="175.8" cy="421.4" r="3.5" fill="#d62728"/>
+<circle cx="352.5" cy="204.3" r="3.5" fill="#d62728"/>
+<circle cx="529.2" cy="175.3" r="3.5" fill="#d62728"/>
+<line x1="180.8" y1="389.2" x2="180.8" y2="391.5" stroke="#8c564b" stroke-width="1.5"/>
+<line x1="177.8" y1="389.2" x2="183.8" y2="389.2" stroke="#8c564b"/>
+<line x1="177.8" y1="391.5" x2="183.8" y2="391.5" stroke="#8c564b"/>
+<line x1="357.5" y1="260.9" x2="357.5" y2="262.3" stroke="#8c564b" stroke-width="1.5"/>
+<line x1="354.5" y1="260.9" x2="360.5" y2="260.9" stroke="#8c564b"/>
+<line x1="354.5" y1="262.3" x2="360.5" y2="262.3" stroke="#8c564b"/>
+<line x1="534.2" y1="258.5" x2="534.2" y2="259.9" stroke="#8c564b" stroke-width="1.5"/>
+<line x1="531.2" y1="258.5" x2="537.2" y2="258.5" stroke="#8c564b"/>
+<line x1="531.2" y1="259.9" x2="537.2" y2="259.9" stroke="#8c564b"/>
+<polyline points="180.8,390.9 357.5,261.0 534.2,259.0" fill="none" stroke="#8c564b" stroke-width="2" stroke-dasharray="6 4"/>
+<circle cx="180.8" cy="390.9" r="3.5" fill="#8c564b"/>
+<circle cx="357.5" cy="261.0" r="3.5" fill="#8c564b"/>
+<circle cx="534.2" cy="259.0" r="3.5" fill="#8c564b"/>
+<line x1="630" y1="60" x2="658" y2="60" stroke="#1f77b4" stroke-width="2"/>
+<circle cx="644" cy="60" r="3.5" fill="#1f77b4"/>
+<text x="666" y="64">cryptography, AES-128-GCM</text>
+<line x1="630" y1="84" x2="658" y2="84" stroke="#2ca02c" stroke-width="2"/>
+<circle cx="644" cy="84" r="3.5" fill="#2ca02c"/>
+<text x="666" y="88">cryptography, AES-256-GCM</text>
+<line x1="630" y1="108" x2="658" y2="108" stroke="#9467bd" stroke-width="2"/>
+<circle cx="644" cy="108" r="3.5" fill="#9467bd"/>
+<text x="666" y="112">cryptography, ChaCha20-Poly1305</text>
+<line x1="630" y1="132" x2="658" y2="132" stroke="#ff7f0e" stroke-width="2" stroke-dasharray="6 4"/>
+<circle cx="644" cy="132" r="3.5" fill="#ff7f0e"/>
+<text x="666" y="136">pycryptodome, AES-128-GCM</text>
+<line x1="630" y1="156" x2="658" y2="156" stroke="#d62728" stroke-width="2" stroke-dasharray="6 4"/>
+<circle cx="644" cy="156" r="3.5" fill="#d62728"/>
+<text x="666" y="160">pycryptodome, AES-256-GCM</text>
+<line x1="630" y1="180" x2="658" y2="180" stroke="#8c564b" stroke-width="2" stroke-dasharray="6 4"/>
+<circle cx="644" cy="180" r="3.5" fill="#8c564b"/>
+<text x="666" y="184">pycryptodome, ChaCha20-Poly1305</text>
+<text x="630" y="218" font-size="11" fill="#444444">Точка — медіана 5 середніх часів серій;</text>
+<text x="630" y="233" font-size="11" fill="#444444">відрізок — розкид мін–макс п&#x27;яти серій</text>
+<text x="630" y="248" font-size="11" fill="#444444">(пропускна здатність за початковими</text>
+<text x="630" y="263" font-size="11" fill="#444444">байтами, без тега).</text>
+</svg>

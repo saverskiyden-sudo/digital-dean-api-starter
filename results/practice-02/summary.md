@@ -1,0 +1,40 @@
+Прогін `20261031T150132Z-47dc8e`. Медіана та IQR — у мікросекундах на операцію; швидкість — МіБ/с.
+
+| Комбінація | Операція | Розмір | Медіана, мкс | IQR, мкс | МіБ/с |
+|---|---|---|---|---|---|
+| cryptography AES-128-GCM | decrypt | 1 КіБ | 3.97 | 0.13 | 246.2 |
+| cryptography AES-128-GCM | decrypt | 64 КіБ | 19.58 | 0.19 | 3191.4 |
+| cryptography AES-128-GCM | decrypt | 1024 КіБ | 566.53 | 3.30 | 1765.1 |
+| cryptography AES-128-GCM | encrypt | 1 КіБ | 4.14 | 0.40 | 235.9 |
+| cryptography AES-128-GCM | encrypt | 64 КіБ | 18.61 | 0.39 | 3358.4 |
+| cryptography AES-128-GCM | encrypt | 1024 КіБ | 552.73 | 42.76 | 1809.2 |
+| cryptography AES-256-GCM | decrypt | 1 КіБ | 4.11 | 0.37 | 237.4 |
+| cryptography AES-256-GCM | decrypt | 64 КіБ | 20.92 | 0.59 | 2987.4 |
+| cryptography AES-256-GCM | decrypt | 1024 КіБ | 583.86 | 9.83 | 1712.8 |
+| cryptography AES-256-GCM | encrypt | 1 КіБ | 4.14 | 0.72 | 235.7 |
+| cryptography AES-256-GCM | encrypt | 64 КіБ | 19.05 | 0.13 | 3280.8 |
+| cryptography AES-256-GCM | encrypt | 1024 КіБ | 568.10 | 23.36 | 1760.3 |
+| cryptography ChaCha20-Poly1305 | decrypt | 1 КіБ | 4.03 | 0.03 | 242.3 |
+| cryptography ChaCha20-Poly1305 | decrypt | 64 КіБ | 30.59 | 1.71 | 2043.1 |
+| cryptography ChaCha20-Poly1305 | decrypt | 1024 КіБ | 744.18 | 7.91 | 1343.8 |
+| cryptography ChaCha20-Poly1305 | encrypt | 1 КіБ | 4.31 | 0.45 | 226.7 |
+| cryptography ChaCha20-Poly1305 | encrypt | 64 КіБ | 30.04 | 0.45 | 2080.6 |
+| cryptography ChaCha20-Poly1305 | encrypt | 1024 КіБ | 728.16 | 28.33 | 1373.3 |
+| pycryptodome AES-128-GCM | decrypt | 1 КіБ | 59.37 | 0.83 | 16.4 |
+| pycryptodome AES-128-GCM | decrypt | 64 КіБ | 86.53 | 0.40 | 722.3 |
+| pycryptodome AES-128-GCM | decrypt | 1024 КіБ | 823.40 | 55.44 | 1214.5 |
+| pycryptodome AES-128-GCM | encrypt | 1 КіБ | 46.76 | 0.62 | 20.9 |
+| pycryptodome AES-128-GCM | encrypt | 64 КіБ | 75.89 | 0.90 | 823.6 |
+| pycryptodome AES-128-GCM | encrypt | 1024 КіБ | 796.72 | 56.60 | 1255.1 |
+| pycryptodome AES-256-GCM | decrypt | 1 КіБ | 59.58 | 1.14 | 16.4 |
+| pycryptodome AES-256-GCM | decrypt | 64 КіБ | 89.80 | 1.26 | 696.0 |
+| pycryptodome AES-256-GCM | decrypt | 1024 КіБ | 869.87 | 38.61 | 1149.6 |
+| pycryptodome AES-256-GCM | encrypt | 1 КіБ | 47.39 | 1.46 | 20.6 |
+| pycryptodome AES-256-GCM | encrypt | 64 КіБ | 80.19 | 0.56 | 779.4 |
+| pycryptodome AES-256-GCM | encrypt | 1024 КіБ | 852.40 | 19.27 | 1173.2 |
+| pycryptodome ChaCha20-Poly1305 | decrypt | 1 КіБ | 35.22 | 0.82 | 27.7 |
+| pycryptodome ChaCha20-Poly1305 | decrypt | 64 КіБ | 239.10 | 3.37 | 261.4 |
+| pycryptodome ChaCha20-Poly1305 | decrypt | 1024 КіБ | 3692.36 | 25.18 | 270.8 |
+| pycryptodome ChaCha20-Poly1305 | encrypt | 1 КіБ | 23.23 | 0.82 | 42.0 |
+| pycryptodome ChaCha20-Poly1305 | encrypt | 64 КіБ | 229.21 | 0.74 | 272.7 |
+| pycryptodome ChaCha20-Poly1305 | encrypt | 1024 КіБ | 3704.88 | 45.21 | 269.9 |
