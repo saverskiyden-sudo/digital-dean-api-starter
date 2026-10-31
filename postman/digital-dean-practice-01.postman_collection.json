@@ -48,7 +48,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"full_name\": \"Олена Коваль\",\n  \"email\": \"olena.koval@example.com\",\n  \"group_code\": \"КН-31\",\n  \"study_program\": \"Комп'ютерні науки\"\n}",
+          "raw": "{\n  \"full_name\": \"Олена Коваль\",\n  \"email\": \"olena.koval@example.com\",\n  \"group_code\": \"КН-31\",\n  \"enrollment_year\": 2024\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -231,12 +231,12 @@
       ]
     },
     {
-      "name": "09 Filter by study program",
+      "name": "09 Filter by enrollment year",
       "request": {
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{base_url}}/api/v1/students?study_program=Комп'ютерні%20науки",
+          "raw": "{{base_url}}/api/v1/students?enrollment_year=2024",
           "host": [
             "{{base_url}}"
           ],
@@ -247,8 +247,8 @@
           ],
           "query": [
             {
-              "key": "study_program",
-              "value": "Комп'ютерні науки"
+              "key": "enrollment_year",
+              "value": "2024"
             }
           ]
         }
@@ -260,7 +260,7 @@
             "type": "text/javascript",
             "exec": [
               "pm.test('status is 200', () => pm.response.to.have.status(200));",
-              "pm.test('all records match filter', () => { const rows = pm.response.json(); pm.expect(rows.every(x => x.study_program === \"Комп'ютерні науки\")).to.be.true; });"
+              "pm.test('all records match filter', () => { const rows = pm.response.json(); pm.expect(rows).to.be.an('array'); pm.expect(rows.every(x => x.enrollment_year === 2024)).to.be.true; });"
             ]
           }
         }
@@ -278,7 +278,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"full_name\": \"Інший Студент\",\n  \"email\": \"olena.koval@example.com\",\n  \"group_code\": \"КН-22\",\n  \"study_program\": \"Комп'ютерні науки\"\n}",
+          "raw": "{\n  \"full_name\": \"Інший Студент\",\n  \"email\": \"olena.koval@example.com\",\n  \"group_code\": \"КН-22\",\n  \"enrollment_year\": 2024\n}",
           "options": {
             "raw": {
               "language": "json"
