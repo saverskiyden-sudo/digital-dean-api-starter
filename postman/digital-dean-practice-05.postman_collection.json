@@ -1,0 +1,838 @@
+{
+  "info": {
+    "name": "Digital Dean — practice 05 (SQLite accounts)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Локальна послідовність лише для 127.0.0.1 і синтетичних одноразових облікових даних. Запускати з початку: кроки створюють власні логіни й запам'ятовують лише свої id."
+  },
+  "item": [
+    {
+      "name": "01 Health",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/health",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "health"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const s = Date.now().toString();",
+              "pm.collectionVariables.set(\"inactive_login\", \"pm_inactive_\" + s);",
+              "pm.collectionVariables.set(\"active_login\", \"pm_active_\" + s);",
+              "pm.collectionVariables.set(\"other_login\", \"pm_other_\" + s);"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status 200\", () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "02 Register inactive (default status)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/v1/users",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "users"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Навчальний користувач\",\n  \"email\": \"{{inactive_login}}@example.com\",\n  \"login\": \"{{inactive_login}}\",\n  \"password\": \"Learning only 05!\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"safe created user\", () => {",
+              "  pm.response.to.have.status(201);",
+              "  const b = pm.response.json();",
+              "  pm.expect(Object.keys(b).sort()).to.eql([\"email\", \"id\", \"login\", \"name\", \"status_id\"]);",
+              "  pm.expect(Number.isInteger(b.id)).to.eql(true);",
+              "  pm.expect(b.id).to.be.above(0);",
+              "  pm.expect(b.status_id).to.eql(0);",
+              "  pm.collectionVariables.set(\"inactive_user_id\", String(b.id));",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "03 Login inactive -> false",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/v1/auth/login",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "auth",
+            "login"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"login\": \"{{inactive_login}}\",\n  \"password\": \"Learning only 05!\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"login is JSON false\", () => {",
+              "  pm.response.to.have.status(200);",
+              "  pm.expect(pm.response.json()).to.eql(false);",
+              "  pm.expect(pm.response.text()).to.eql(\"false\");",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "04 Register active",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/v1/users",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "users"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Навчальний користувач\",\n  \"email\": \"{{active_login}}@example.com\",\n  \"login\": \"{{active_login}}\",\n  \"password\": \"Learning only 05!\",\n  \"status_id\": 1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"safe created user\", () => {",
+              "  pm.response.to.have.status(201);",
+              "  const b = pm.response.json();",
+              "  pm.expect(Object.keys(b).sort()).to.eql([\"email\", \"id\", \"login\", \"name\", \"status_id\"]);",
+              "  pm.expect(Number.isInteger(b.id)).to.eql(true);",
+              "  pm.expect(b.id).to.be.above(0);",
+              "  pm.expect(b.status_id).to.eql(1);",
+              "  pm.collectionVariables.set(\"active_user_id\", String(b.id));",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "05 Login active -> true",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/v1/auth/login",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "auth",
+            "login"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"login\": \"{{active_login}}\",\n  \"password\": \"Learning only 05!\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"login is JSON true\", () => {",
+              "  pm.response.to.have.status(200);",
+              "  pm.expect(pm.response.json()).to.eql(true);",
+              "  pm.expect(pm.response.text()).to.eql(\"true\");",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "06 Wrong password -> false",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/v1/auth/login",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "auth",
+            "login"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"login\": \"{{active_login}}\",\n  \"password\": \"Wrong password 05!\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"login is JSON false\", () => {",
+              "  pm.response.to.have.status(200);",
+              "  pm.expect(pm.response.json()).to.eql(false);",
+              "  pm.expect(pm.response.text()).to.eql(\"false\");",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "07 Unknown login -> false",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/v1/auth/login",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "auth",
+            "login"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"login\": \"{{other_login}}\",\n  \"password\": \"Learning only 05!\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"login is JSON false\", () => {",
+              "  pm.response.to.have.status(200);",
+              "  pm.expect(pm.response.json()).to.eql(false);",
+              "  pm.expect(pm.response.text()).to.eql(\"false\");",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "08 Duplicate login -> 409",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/v1/users",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "users"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Навчальний користувач\",\n  \"email\": \"{{other_login}}@example.com\",\n  \"login\": \"{{active_login}}\",\n  \"password\": \"Learning only 05!\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status 409\", () => pm.response.to.have.status(409));",
+              "pm.test(\"controlled detail\", () => pm.expect(pm.response.json()).to.eql({detail: \"user already exists\"}));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "09 Duplicate email (case) -> 409",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/v1/users",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "users"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Навчальний користувач\",\n  \"email\": \"{{active_login}}@EXAMPLE.COM\",\n  \"login\": \"{{other_login}}\",\n  \"password\": \"Learning only 05!\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status 409\", () => pm.response.to.have.status(409));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "10 Extra field -> 422",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/v1/users",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "users"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Навчальний користувач\",\n  \"email\": \"{{other_login}}@example.com\",\n  \"login\": \"{{other_login}}\",\n  \"password\": \"Learning only 05!\",\n  \"salt\": \"client_salt\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status 422\", () => pm.response.to.have.status(422));",
+              "pm.test(\"no input echo\", () => {",
+              "  pm.expect(pm.response.text()).to.not.include(\"Learning only 05!\");",
+              "  pm.response.json().detail.forEach(d => { pm.expect(d).to.not.have.property(\"input\"); pm.expect(d).to.not.have.property(\"ctx\"); });",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "11 Wrong status type -> 422",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/v1/users",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "users"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Навчальний користувач\",\n  \"email\": \"{{other_login}}@example.com\",\n  \"login\": \"{{other_login}}\",\n  \"password\": \"Learning only 05!\",\n  \"status_id\": \"1\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status 422\", () => pm.response.to.have.status(422));",
+              "pm.test(\"no input echo\", () => {",
+              "  pm.expect(pm.response.text()).to.not.include(\"Learning only 05!\");",
+              "  pm.response.json().detail.forEach(d => { pm.expect(d).to.not.have.property(\"input\"); pm.expect(d).to.not.have.property(\"ctx\"); });",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "12 Block active",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/v1/users/{{active_user_id}}/block",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "users",
+            "{{active_user_id}}",
+            "block"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status 200\", () => pm.response.to.have.status(200));",
+              "pm.test(\"blocked, same id\", () => {",
+              "  const b = pm.response.json();",
+              "  pm.expect(b.status_id).to.eql(2);",
+              "  pm.expect(String(b.id)).to.eql(pm.collectionVariables.get(\"active_user_id\"));",
+              "  pm.expect(Object.keys(b).sort()).to.eql([\"email\", \"id\", \"login\", \"name\", \"status_id\"]);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "13 Block again (idempotent)",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/v1/users/{{active_user_id}}/block",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "users",
+            "{{active_user_id}}",
+            "block"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status 200\", () => pm.response.to.have.status(200));",
+              "pm.test(\"still blocked\", () => pm.expect(pm.response.json().status_id).to.eql(2));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "14 Login blocked -> false",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/v1/auth/login",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "auth",
+            "login"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"login\": \"{{active_login}}\",\n  \"password\": \"Learning only 05!\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"login is JSON false\", () => {",
+              "  pm.response.to.have.status(200);",
+              "  pm.expect(pm.response.json()).to.eql(false);",
+              "  pm.expect(pm.response.text()).to.eql(\"false\");",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "15 Delete -> 204 empty",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/v1/users/{{active_user_id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "users",
+            "{{active_user_id}}"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status 204\", () => pm.response.to.have.status(204));",
+              "pm.test(\"empty body\", () => pm.expect(pm.response.text()).to.eql(\"\"));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "16 Login deleted -> false",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/v1/auth/login",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "auth",
+            "login"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"login\": \"{{active_login}}\",\n  \"password\": \"Learning only 05!\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"login is JSON false\", () => {",
+              "  pm.response.to.have.status(200);",
+              "  pm.expect(pm.response.json()).to.eql(false);",
+              "  pm.expect(pm.response.text()).to.eql(\"false\");",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "17 Repeat delete -> 404",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/v1/users/{{active_user_id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "users",
+            "{{active_user_id}}"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status 404\", () => pm.response.to.have.status(404));",
+              "pm.test(\"detail\", () => pm.expect(pm.response.json()).to.eql({detail: \"user not found\"}));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "18 Block deleted -> 404",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/v1/users/{{active_user_id}}/block",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "users",
+            "{{active_user_id}}",
+            "block"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status 404\", () => pm.response.to.have.status(404));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "19 Delete own inactive -> 204",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/v1/users/{{inactive_user_id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "users",
+            "{{inactive_user_id}}"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status 204\", () => pm.response.to.have.status(204));",
+              "pm.test(\"empty body\", () => pm.expect(pm.response.text()).to.eql(\"\"));"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8000"
+    },
+    {
+      "key": "inactive_login",
+      "value": ""
+    },
+    {
+      "key": "active_login",
+      "value": ""
+    },
+    {
+      "key": "other_login",
+      "value": ""
+    },
+    {
+      "key": "inactive_user_id",
+      "value": ""
+    },
+    {
+      "key": "active_user_id",
+      "value": ""
+    }
+  ]
+}
