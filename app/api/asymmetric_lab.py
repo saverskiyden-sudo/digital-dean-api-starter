@@ -1,9 +1,22 @@
-"""Додайте новий маршрут та підключення до наявного app/main.py."""
+"""GET-маршрут збереженого звіту асиметричного експерименту (практична 3).
+
+Маршрут лише читає results/practice-03/report.json: експеримент із HTTP не
+запускається, шлях файлу задає тільки сервер.
+"""
 import json
 from pathlib import Path
-from fastapi import APIRouter, HTTPException
+from typing import Annotated
+
+from fastapi import APIRouter, HTTPException, Query
 from pydantic import ValidationError
-from app.schemas.asymmetric_report import BenchmarkReport, validate_complete_report
+
+from app.schemas.asymmetric_report import (
+    ALLOWED_PAYLOAD_BYTES,
+    BenchmarkReport,
+    BenchmarkResponse,
+    filter_report,
+    validate_complete_report,
+)
 
 router = APIRouter(prefix="/api/v1/lab/crypto", tags=["asymmetric-lab"])
 REPORT_PATH = Path(__file__).resolve().parents[2] / "results/practice-03/report.json"
@@ -38,8 +51,29 @@ def load_report() -> BenchmarkReport:
         raise HTTPException(500, "benchmark report invalid") from exc
 
 
-def get_asymmetric_benchmark_results() -> BenchmarkReport:
-    # TODO register @router.get("/asymmetric-benchmark-results", response_model=...)
-    # TODO return validated report and implement the individual variant.
-    # Do not import/run the benchmark here or accept a client file path.
-    raise NotImplementedError("Implement the new API operation")
+@router.get(
+    "/asymmetric-benchmark-results",
+    response_model=BenchmarkResponse,
+    summary="Збережений звіт асиметричного й гібридного експерименту",
+    responses={
+        404: {"description": "benchmark report not found"},
+        422: {"description": "unsupported payload_bytes"},
+        500: {"description": "benchmark report invalid"},
+    },
+)
+def get_asymmetric_benchmark_results(
+    payload_bytes: Annotated[
+        int | None,
+        Query(
+            description=(
+                "Необов'язковий фільтр results за розміром повідомлення: "
+                "64, 1024, 65536 або 1048576 байтів."
+            ),
+        ),
+    ] = None,
+) -> BenchmarkResponse:
+    # Індивідуальний варіант 1: перевірка переліку явна, а не лише типом int.
+    if payload_bytes is not None and payload_bytes not in ALLOWED_PAYLOAD_BYTES:
+        raise HTTPException(422, "unsupported payload_bytes")
+    # Спочатку перевіряється повний файл, потім фільтрується лише results.
+    return filter_report(load_report(), payload_bytes)

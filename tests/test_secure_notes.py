@@ -421,7 +421,7 @@ def test_category_is_part_of_the_authenticated_context():
 
 def test_openapi_describes_secure_notes_and_category():
     schema = client.get("/openapi.json").json()
-    assert schema["info"]["version"] == "0.2.0"
+    assert schema["info"]["version"] == "0.3.0"
     paths = schema["paths"]
     assert "post" in paths["/api/v1/students/{student_id}/secure-notes"]
     assert "get" in paths["/api/v1/students/{student_id}/secure-notes/{note_id}"]
