@@ -1,0 +1,109 @@
+{
+  "created_at": "2026-11-09T09:44:20+00:00",
+  "base_url": "http://127.0.0.1:8765",
+  "database": "var/digital-dean.sqlite3 (not versioned)",
+  "passed": 25,
+  "total": 25,
+  "checks": [
+    {
+      "name": "01 health 200",
+      "passed": true
+    },
+    {
+      "name": "02 register default -> 201, inactive, public fields only",
+      "passed": true
+    },
+    {
+      "name": "03 login inactive -> false",
+      "passed": true
+    },
+    {
+      "name": "04 register active -> 201, integer id",
+      "passed": true
+    },
+    {
+      "name": "05 login active -> true",
+      "passed": true
+    },
+    {
+      "name": "06 wrong password -> false",
+      "passed": true
+    },
+    {
+      "name": "07 unknown login -> false",
+      "passed": true
+    },
+    {
+      "name": "08 duplicate login -> 409",
+      "passed": true
+    },
+    {
+      "name": "09 duplicate email (other case) -> 409",
+      "passed": true
+    },
+    {
+      "name": "10 extra field -> 422 without input echo",
+      "passed": true
+    },
+    {
+      "name": "11 status_id as string -> 422",
+      "passed": true
+    },
+    {
+      "name": "12 block -> 200, status 2, same id",
+      "passed": true
+    },
+    {
+      "name": "13 block -> 200, status 2, same id",
+      "passed": true
+    },
+    {
+      "name": "14 login blocked -> false",
+      "passed": true
+    },
+    {
+      "name": "15 delete -> 204 with empty body",
+      "passed": true
+    },
+    {
+      "name": "16 login deleted -> false",
+      "passed": true
+    },
+    {
+      "name": "17 repeat delete -> 404",
+      "passed": true
+    },
+    {
+      "name": "18 block deleted -> 404",
+      "passed": true
+    },
+    {
+      "name": "19 delete own inactive record -> 204",
+      "passed": true
+    },
+    {
+      "name": "R1 register restart user (active)",
+      "passed": true
+    },
+    {
+      "name": "R2 login before restart -> true",
+      "passed": true
+    },
+    {
+      "name": "R3 after server restart: login -> true",
+      "passed": true
+    },
+    {
+      "name": "R4 block restart user -> 200",
+      "passed": true
+    },
+    {
+      "name": "R5 after second restart: login -> false",
+      "passed": true
+    },
+    {
+      "name": "R6 cleanup: delete restart user -> 204",
+      "passed": true
+    }
+  ]
+}
