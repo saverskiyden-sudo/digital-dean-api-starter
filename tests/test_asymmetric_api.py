@@ -146,7 +146,7 @@ def test_openapi_describes_route_parameter_and_version():
     assert not parameters["payload_bytes"].get("required", False)
     assert "integer" in json.dumps(parameters["payload_bytes"]["schema"])
     assert {"404", "422", "500"} <= set(operation["responses"])
-    assert app.version == "0.4.0"
+    assert app.version == "0.5.0"
 
 
 def test_previous_routes_still_registered():

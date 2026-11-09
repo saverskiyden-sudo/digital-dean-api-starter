@@ -94,7 +94,7 @@ def test_variant_with_unavailable_legacy_profiles():
 
 def test_openapi_describes_variant_parameter():
     schema = client.get("/openapi.json").json()
-    assert schema["info"]["version"] == "0.4.0"
+    assert schema["info"]["version"] == "0.5.0"
     operation = schema["paths"][PATH]["get"]
     names = [p["name"] for p in operation["parameters"]]
     assert names == ["payload_bytes"]
