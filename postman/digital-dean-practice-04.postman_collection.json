@@ -11,7 +11,7 @@
     },
     {
       "key": "variant",
-      "value": "0"
+      "value": "1"
     },
     {
       "key": "manual_state",
@@ -117,7 +117,20 @@
           "script": {
             "type": "text/javascript",
             "exec": [
-              "pm.test(\"size filter\",()=>{pm.response.to.have.status(200);const b=pm.response.json();const a=b.algorithms.filter(x=>x.available).length;pm.expect(b.results).to.have.lengthOf(2*a);pm.expect(b.results.every(x=>x.payload_bytes===1024)).to.eql(true);});"
+              "pm.test(\"size filter\",()=>{pm.response.to.have.status(200);const b=pm.response.json();const a=b.algorithms.filter(x=>x.available).length;pm.expect(b.results).to.have.lengthOf(2*a);pm.expect(b.results.every(x=>x.payload_bytes===1024)).to.eql(true);});",
+              "",
+              "// Власна перевірка варіанта 1: фільтрується лише results.",
+              "if (pm.collectionVariables.get(\"variant\") === \"1\") {",
+              "  pm.test(\"variant 1 keeps algorithms, avalanche and checks complete\", () => {",
+              "    const b = pm.response.json();",
+              "    const a = b.algorithms.filter(x => x.available).length;",
+              "    pm.expect(b.results).to.have.lengthOf(2 * a);",
+              "    pm.expect(b.results.every(r => r.payload_bytes === 1024)).to.eql(true);",
+              "    pm.expect(b.algorithms).to.have.lengthOf(7);",
+              "    pm.expect(b.avalanche).to.have.lengthOf(a);",
+              "    pm.expect(b.checks).to.have.lengthOf(6 * a);",
+              "  });",
+              "}"
             ]
           }
         }
