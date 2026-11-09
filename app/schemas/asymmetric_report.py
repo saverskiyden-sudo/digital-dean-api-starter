@@ -1,6 +1,16 @@
-"""Структура базового звіту; допишіть семантичний валідатор."""
+"""Структура базового звіту та семантична перевірка збереженого JSON."""
+from datetime import datetime, timedelta
+from math import isclose
 from typing import Annotated, Literal
 from pydantic import BaseModel, BeforeValidator, ConfigDict, Field
+
+from app.security.asymmetric.profiles import (
+    DIRECT_SIZE,
+    HYBRID_SIZES,
+    KEY_PROFILES,
+    PROFILES,
+    expected_ciphertext_bytes,
+)
 
 
 def _exact_integer(value: object) -> int:
@@ -90,9 +100,103 @@ class BenchmarkResponse(BenchmarkReport):
     results: list[Result] = Field(max_length=22)
 
 
+# Довжина відкритого ключа в DER SubjectPublicKeyInfo (e = 65537 для RSA).
+EXPECTED_DER_BYTES = {"rsa-2048": 294, "rsa-3072": 422, "x25519": 44, "p256": 91}
+EXPECTED_CHECKS = {
+    (profile, name)
+    for profile in PROFILES
+    for name in ("roundtrip", "wrong_key", "tamper", "wrong_context")
+} | {("rsa2048-oaep", "oaep_boundary"), ("rsa3072-oaep", "oaep_boundary")}
+
+
+def _expected_results() -> set[tuple[str, str, int]]:
+    return {
+        (profile, operation, size)
+        for profile, spec in PROFILES.items()
+        for operation in ("encrypt", "decrypt")
+        for size in spec.sizes
+    }
+
+
+def _check_metadata(report: "BenchmarkReport") -> None:
+    experiment = report.experiment
+    if experiment.hybrid_sizes_bytes != list(HYBRID_SIZES):
+        raise ValueError("unexpected hybrid sizes")
+    if experiment.direct_payload_bytes != DIRECT_SIZE:
+        raise ValueError("unexpected direct payload size")
+    try:
+        created = datetime.fromisoformat(experiment.created_at_utc.replace("Z", "+00:00"))
+    except ValueError as exc:
+        raise ValueError("created_at_utc is not ISO 8601") from exc
+    if created.tzinfo is None or created.utcoffset() != timedelta(0):
+        raise ValueError("created_at_utc must be in UTC")
+
+
+def _check_key_generation(report: "BenchmarkReport") -> None:
+    profiles = [item.key_profile for item in report.key_generation]
+    if sorted(profiles) != sorted(KEY_PROFILES):
+        raise ValueError("key generation coverage is not exact")
+    for item in report.key_generation:
+        if item.public_key_der_bytes != EXPECTED_DER_BYTES[item.key_profile]:
+            raise ValueError("unexpected public key DER size")
+
+
+def _check_results(report: "BenchmarkReport") -> None:
+    seen: set[tuple[str, str, int]] = set()
+    for item in report.results:
+        spec = PROFILES[item.profile]
+        combo = (item.profile, item.operation, item.payload_bytes)
+        if combo in seen:
+            raise ValueError("duplicate result")
+        seen.add(combo)
+        if item.group != spec.group or item.payload_bytes not in spec.sizes:
+            raise ValueError("result does not match its profile")
+        if item.ciphertext_bytes != expected_ciphertext_bytes(
+            item.profile, item.payload_bytes
+        ):
+            raise ValueError("unexpected ciphertext length")
+        if spec.group == "direct":
+            if item.throughput_mib_s is not None:
+                raise ValueError("direct profiles have no throughput")
+            continue
+        if item.throughput_mib_s is None:
+            raise ValueError("hybrid profiles need throughput")
+        formula = item.payload_bytes * 1e9 / (2**20 * item.median_ns)
+        if not isclose(item.throughput_mib_s, formula, rel_tol=1e-6):
+            raise ValueError("throughput does not match the formula")
+    if seen != _expected_results():
+        raise ValueError("result coverage is not exact")
+
+
+def _check_checks(report: "BenchmarkReport") -> None:
+    keys = [(item.profile, item.name) for item in report.checks]
+    if len(set(keys)) != len(keys) or set(keys) != EXPECTED_CHECKS:
+        raise ValueError("check coverage is not exact")
+    # passed=false не відхиляється: це чесний результат невдалої перевірки.
+
+
 def validate_complete_report(data: object) -> BenchmarkReport:
     report = BenchmarkReport.model_validate(data)
-    # TODO exact coverage/uniqueness; metadata sizes and UTC; dimensions;
-    # expected envelope lengths; throughput formula; check coverage.
-    # False check values are evidence of failure: retain them, do not hide.
-    raise NotImplementedError("Implement semantic validation after structural validation")
+    _check_metadata(report)
+    _check_key_generation(report)
+    _check_results(report)
+    _check_checks(report)
+    return report
+
+
+# Індивідуальний варіант 1 (номер 17, 17 mod 4 = 1): фільтр payload_bytes.
+ALLOWED_PAYLOAD_BYTES = (DIRECT_SIZE, *HYBRID_SIZES)
+
+
+def filter_report(report: BenchmarkReport, payload_bytes: int | None) -> BenchmarkResponse:
+    """Фільтрує лише results; key_generation і checks лишаються повними.
+
+    Повний файл уже перевірено validate_complete_report. Порожній результат
+    фільтрації допустимий, тому вимога «рівно 22» тут не застосовується.
+    """
+    data = report.model_dump()
+    if payload_bytes is not None:
+        data["results"] = [
+            item for item in data["results"] if item["payload_bytes"] == payload_bytes
+        ]
+    return BenchmarkResponse.model_validate(data)
