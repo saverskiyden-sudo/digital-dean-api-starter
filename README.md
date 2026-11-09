@@ -137,3 +137,31 @@ python -m benchmarks.make_charts --results-dir results/practice-02
 ### Postman
 
 Колекція `postman/digital-dean-practice-02.postman_collection.json` (15 запитів, `base_url` = `http://127.0.0.1:8000`): запустіть сервер, потім Runner. Крок 10 потребує локально створеного `report.json`.
+
+## Практична робота 3: асиметричне та гібридне шифрування
+
+API доповнено окремим експериментом і маршрутом для результатів порівняння п'яти профілів: прямі RSA-OAEP (2048 і 3072 біти, 64 байти), навчальний гібрид RSA-3072-OAEP + AES-256-GCM та HPKE Base (X25519 і P-256, HKDF-SHA256, AES-256-GCM) на 1 КіБ, 64 КіБ і 1 МіБ. Версія застосунку й пакета — `0.3.0`.
+
+**Індивідуальний варіант 1 (номер 17, 17 mod 4 = 1): необов'язковий `payload_bytes`.** Допустимі значення 64, 1024, 65536, 1048576; параметр фільтрує лише `results` (для 64 — 4 записи, для решти — по 6), `key_generation` і `checks` лишаються повними; інше значення дає `422`.
+
+| Метод | Шлях | Успіх | Помилки |
+|---|---|---|---|
+| GET | `/api/v1/lab/crypto/asymmetric-benchmark-results` | 200: звіт `results/practice-03/report.json` (4 `key_generation`, 22 `results`, 22 `checks`) | 404 `benchmark report not found`, 422, 500 `benchmark report invalid` |
+
+Маршрут тільки читає збережений звіт і перевіряє його; експеримент із HTTP не запускається, шлях файлу задає лише сервер.
+
+### Запуск
+
+```powershell
+python -m pip install -e ".[dev]"
+python -m pip install -r requirements-practice-02.txt
+python -m pip install -r requirements-practice-03.txt
+python examples/practice_03_rsa.py
+python -m pytest
+python -m benchmarks.asymmetric_benchmark          # після фіксації коду в Git
+python -m benchmarks.make_asymmetric_charts
+python -m uvicorn app.main:app --host 127.0.0.1
+```
+
+Експеримент запускайте окремо від сервера й без інших важких програм. Він створює `results/practice-03/raw.csv` (130 рядків) і `report.json`; `make_asymmetric_charts` будує `time_hybrid.svg`, `time_rsa_direct.svg`, `key_generation.svg` і `summary.md`. Колекція Postman: `postman/digital-dean-practice-03.postman_collection.json` (змінна `variant` = 1). Звіт: `docs/practice-03-report.md`.
+
