@@ -1,0 +1,917 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-11-09T09:27:20+00:00",
+  "source_commit": "ea80dda382981529a06654086629210d0f3dd5b1",
+  "parameters": {
+    "sizes": [
+      64,
+      1024,
+      65536,
+      1048576
+    ],
+    "chunk_bytes": 16384,
+    "warmup": 10,
+    "series": 5,
+    "repeats_small": 1000,
+    "repeats_large": 100,
+    "avalanche_trials": 100,
+    "avalanche_bytes": 1024
+  },
+  "environment": {
+    "python": "3.13.16",
+    "openssl_ssl": "OpenSSL 3.5.9 29 Sep 2026",
+    "os": "Windows-10-10.0.19045-SP0",
+    "cpu": "AMD Ryzen 5 5500",
+    "architecture": "AMD64"
+  },
+  "algorithms": [
+    {
+      "algorithm": "sha256",
+      "available": true,
+      "reason": null,
+      "implementation": "_hashlib.HASH"
+    },
+    {
+      "algorithm": "sha512",
+      "available": true,
+      "reason": null,
+      "implementation": "_hashlib.HASH"
+    },
+    {
+      "algorithm": "sha3-256",
+      "available": true,
+      "reason": null,
+      "implementation": "_hashlib.HASH"
+    },
+    {
+      "algorithm": "blake2b-256",
+      "available": true,
+      "reason": null,
+      "implementation": "_blake2.blake2b"
+    },
+    {
+      "algorithm": "blake2s-256",
+      "available": true,
+      "reason": null,
+      "implementation": "_blake2.blake2s"
+    },
+    {
+      "algorithm": "md5",
+      "available": true,
+      "reason": null,
+      "implementation": "_hashlib.HASH"
+    },
+    {
+      "algorithm": "sha1",
+      "available": true,
+      "reason": null,
+      "implementation": "_hashlib.HASH"
+    }
+  ],
+  "results": [
+    {
+      "algorithm": "sha256",
+      "mode": "whole",
+      "payload_bytes": 64,
+      "digest_bytes": 32,
+      "repeats": 1000,
+      "median_ns": 773.3,
+      "iqr_ns": 69.5,
+      "throughput_mib_s": 78.9281730893573
+    },
+    {
+      "algorithm": "sha256",
+      "mode": "whole",
+      "payload_bytes": 1024,
+      "digest_bytes": 32,
+      "repeats": 1000,
+      "median_ns": 1085.4,
+      "iqr_ns": 57.5,
+      "throughput_mib_s": 899.7259074995393
+    },
+    {
+      "algorithm": "sha256",
+      "mode": "whole",
+      "payload_bytes": 65536,
+      "digest_bytes": 32,
+      "repeats": 1000,
+      "median_ns": 32227.6,
+      "iqr_ns": 96.40000000000146,
+      "throughput_mib_s": 1939.3315046730133
+    },
+    {
+      "algorithm": "sha256",
+      "mode": "whole",
+      "payload_bytes": 1048576,
+      "digest_bytes": 32,
+      "repeats": 100,
+      "median_ns": 503585.0,
+      "iqr_ns": 1420.0,
+      "throughput_mib_s": 1985.762085844495
+    },
+    {
+      "algorithm": "sha256",
+      "mode": "chunked",
+      "payload_bytes": 64,
+      "digest_bytes": 32,
+      "repeats": 1000,
+      "median_ns": 657.1,
+      "iqr_ns": 3.300000000000068,
+      "throughput_mib_s": 92.88564335717547
+    },
+    {
+      "algorithm": "sha256",
+      "mode": "chunked",
+      "payload_bytes": 1024,
+      "digest_bytes": 32,
+      "repeats": 1000,
+      "median_ns": 1113.1,
+      "iqr_ns": 16.5,
+      "throughput_mib_s": 877.3358188841974
+    },
+    {
+      "algorithm": "sha256",
+      "mode": "chunked",
+      "payload_bytes": 65536,
+      "digest_bytes": 32,
+      "repeats": 1000,
+      "median_ns": 32274.8,
+      "iqr_ns": 208.70000000000073,
+      "throughput_mib_s": 1936.495346214384
+    },
+    {
+      "algorithm": "sha256",
+      "mode": "chunked",
+      "payload_bytes": 1048576,
+      "digest_bytes": 32,
+      "repeats": 100,
+      "median_ns": 507403.0,
+      "iqr_ns": 1009.0,
+      "throughput_mib_s": 1970.8200385098235
+    },
+    {
+      "algorithm": "sha512",
+      "mode": "whole",
+      "payload_bytes": 64,
+      "digest_bytes": 64,
+      "repeats": 1000,
+      "median_ns": 785.2,
+      "iqr_ns": 4.0,
+      "throughput_mib_s": 77.7319870733571
+    },
+    {
+      "algorithm": "sha512",
+      "mode": "whole",
+      "payload_bytes": 1024,
+      "digest_bytes": 64,
+      "repeats": 1000,
+      "median_ns": 1820.2,
+      "iqr_ns": 4.399999999999864,
+      "throughput_mib_s": 536.5138446324579
+    },
+    {
+      "algorithm": "sha512",
+      "mode": "whole",
+      "payload_bytes": 65536,
+      "digest_bytes": 64,
+      "repeats": 1000,
+      "median_ns": 66482.4,
+      "iqr_ns": 22.30000000000291,
+      "throughput_mib_s": 940.0984320662311
+    },
+    {
+      "algorithm": "sha512",
+      "mode": "whole",
+      "payload_bytes": 1048576,
+      "digest_bytes": 64,
+      "repeats": 100,
+      "median_ns": 1053143.0,
+      "iqr_ns": 3148.0,
+      "throughput_mib_s": 949.5386666388135
+    },
+    {
+      "algorithm": "sha512",
+      "mode": "chunked",
+      "payload_bytes": 64,
+      "digest_bytes": 64,
+      "repeats": 1000,
+      "median_ns": 825.7,
+      "iqr_ns": 5.399999999999977,
+      "throughput_mib_s": 73.9192881797263
+    },
+    {
+      "algorithm": "sha512",
+      "mode": "chunked",
+      "payload_bytes": 1024,
+      "digest_bytes": 64,
+      "repeats": 1000,
+      "median_ns": 1870.5,
+      "iqr_ns": 1.400000000000091,
+      "throughput_mib_s": 522.0863405506549
+    },
+    {
+      "algorithm": "sha512",
+      "mode": "chunked",
+      "payload_bytes": 65536,
+      "digest_bytes": 64,
+      "repeats": 1000,
+      "median_ns": 66898.3,
+      "iqr_ns": 65.40000000000873,
+      "throughput_mib_s": 934.2539347038713
+    },
+    {
+      "algorithm": "sha512",
+      "mode": "chunked",
+      "payload_bytes": 1048576,
+      "digest_bytes": 64,
+      "repeats": 100,
+      "median_ns": 1058880.0,
+      "iqr_ns": 1094.0,
+      "throughput_mib_s": 944.3940767603506
+    },
+    {
+      "algorithm": "sha3-256",
+      "mode": "whole",
+      "payload_bytes": 64,
+      "digest_bytes": 32,
+      "repeats": 1000,
+      "median_ns": 885.8,
+      "iqr_ns": 3.8999999999999773,
+      "throughput_mib_s": 68.9039921539851
+    },
+    {
+      "algorithm": "sha3-256",
+      "mode": "whole",
+      "payload_bytes": 1024,
+      "digest_bytes": 32,
+      "repeats": 1000,
+      "median_ns": 2506.2,
+      "iqr_ns": 8.099999999999909,
+      "throughput_mib_s": 389.6586465565398
+    },
+    {
+      "algorithm": "sha3-256",
+      "mode": "whole",
+      "payload_bytes": 65536,
+      "digest_bytes": 32,
+      "repeats": 1000,
+      "median_ns": 117321.7,
+      "iqr_ns": 309.3999999999942,
+      "throughput_mib_s": 532.7232728472227
+    },
+    {
+      "algorithm": "sha3-256",
+      "mode": "whole",
+      "payload_bytes": 1048576,
+      "digest_bytes": 32,
+      "repeats": 100,
+      "median_ns": 1868995.0,
+      "iqr_ns": 1356.0,
+      "throughput_mib_s": 535.0469102378551
+    },
+    {
+      "algorithm": "sha3-256",
+      "mode": "chunked",
+      "payload_bytes": 64,
+      "digest_bytes": 32,
+      "repeats": 1000,
+      "median_ns": 936.4,
+      "iqr_ns": 19.199999999999932,
+      "throughput_mib_s": 65.18064529047416
+    },
+    {
+      "algorithm": "sha3-256",
+      "mode": "chunked",
+      "payload_bytes": 1024,
+      "digest_bytes": 32,
+      "repeats": 1000,
+      "median_ns": 2550.6,
+      "iqr_ns": 9.099999999999909,
+      "throughput_mib_s": 382.87559789853367
+    },
+    {
+      "algorithm": "sha3-256",
+      "mode": "chunked",
+      "payload_bytes": 65536,
+      "digest_bytes": 32,
+      "repeats": 1000,
+      "median_ns": 117439.8,
+      "iqr_ns": 239.0,
+      "throughput_mib_s": 532.1875548153181
+    },
+    {
+      "algorithm": "sha3-256",
+      "mode": "chunked",
+      "payload_bytes": 1048576,
+      "digest_bytes": 32,
+      "repeats": 100,
+      "median_ns": 1868779.0,
+      "iqr_ns": 2701.0,
+      "throughput_mib_s": 535.1087528273808
+    },
+    {
+      "algorithm": "blake2b-256",
+      "mode": "whole",
+      "payload_bytes": 64,
+      "digest_bytes": 32,
+      "repeats": 1000,
+      "median_ns": 596.8,
+      "iqr_ns": 6.2000000000000455,
+      "throughput_mib_s": 102.27070417225202
+    },
+    {
+      "algorithm": "blake2b-256",
+      "mode": "whole",
+      "payload_bytes": 1024,
+      "digest_bytes": 32,
+      "repeats": 1000,
+      "median_ns": 1777.3,
+      "iqr_ns": 5.2000000000000455,
+      "throughput_mib_s": 549.464074720081
+    },
+    {
+      "algorithm": "blake2b-256",
+      "mode": "whole",
+      "payload_bytes": 65536,
+      "digest_bytes": 32,
+      "repeats": 1000,
+      "median_ns": 86311.1,
+      "iqr_ns": 86.69999999999709,
+      "throughput_mib_s": 724.1247070191434
+    },
+    {
+      "algorithm": "blake2b-256",
+      "mode": "whole",
+      "payload_bytes": 1048576,
+      "digest_bytes": 32,
+      "repeats": 100,
+      "median_ns": 1370742.0,
+      "iqr_ns": 3858.0,
+      "throughput_mib_s": 729.5318885683812
+    },
+    {
+      "algorithm": "blake2b-256",
+      "mode": "chunked",
+      "payload_bytes": 64,
+      "digest_bytes": 32,
+      "repeats": 1000,
+      "median_ns": 613.6,
+      "iqr_ns": 1.8999999999999773,
+      "throughput_mib_s": 99.47059362777053
+    },
+    {
+      "algorithm": "blake2b-256",
+      "mode": "chunked",
+      "payload_bytes": 1024,
+      "digest_bytes": 32,
+      "repeats": 1000,
+      "median_ns": 1814.9,
+      "iqr_ns": 3.7999999999999545,
+      "throughput_mib_s": 538.080610501956
+    },
+    {
+      "algorithm": "blake2b-256",
+      "mode": "chunked",
+      "payload_bytes": 65536,
+      "digest_bytes": 32,
+      "repeats": 1000,
+      "median_ns": 86510.5,
+      "iqr_ns": 59.39999999999418,
+      "throughput_mib_s": 722.4556556718549
+    },
+    {
+      "algorithm": "blake2b-256",
+      "mode": "chunked",
+      "payload_bytes": 1048576,
+      "digest_bytes": 32,
+      "repeats": 100,
+      "median_ns": 1377791.0,
+      "iqr_ns": 1481.0,
+      "throughput_mib_s": 725.7994862791236
+    },
+    {
+      "algorithm": "blake2s-256",
+      "mode": "whole",
+      "payload_bytes": 64,
+      "digest_bytes": 32,
+      "repeats": 1000,
+      "median_ns": 527.6,
+      "iqr_ns": 6.7999999999999545,
+      "throughput_mib_s": 115.68452663002275
+    },
+    {
+      "algorithm": "blake2s-256",
+      "mode": "whole",
+      "payload_bytes": 1024,
+      "digest_bytes": 32,
+      "repeats": 1000,
+      "median_ns": 2537.4,
+      "iqr_ns": 11.899999999999636,
+      "throughput_mib_s": 384.86738393631276
+    },
+    {
+      "algorithm": "blake2s-256",
+      "mode": "whole",
+      "payload_bytes": 65536,
+      "digest_bytes": 32,
+      "repeats": 1000,
+      "median_ns": 137756.3,
+      "iqr_ns": 2201.7000000000116,
+      "throughput_mib_s": 453.6997581961769
+    },
+    {
+      "algorithm": "blake2s-256",
+      "mode": "whole",
+      "payload_bytes": 1048576,
+      "digest_bytes": 32,
+      "repeats": 100,
+      "median_ns": 2208905.0,
+      "iqr_ns": 16719.0,
+      "throughput_mib_s": 452.71299580561407
+    },
+    {
+      "algorithm": "blake2s-256",
+      "mode": "chunked",
+      "payload_bytes": 64,
+      "digest_bytes": 32,
+      "repeats": 1000,
+      "median_ns": 564.5,
+      "iqr_ns": 1.6000000000000227,
+      "throughput_mib_s": 108.12250885739593
+    },
+    {
+      "algorithm": "blake2s-256",
+      "mode": "chunked",
+      "payload_bytes": 1024,
+      "digest_bytes": 32,
+      "repeats": 1000,
+      "median_ns": 2613.8,
+      "iqr_ns": 38.399999999999636,
+      "throughput_mib_s": 373.6179126176448
+    },
+    {
+      "algorithm": "blake2s-256",
+      "mode": "chunked",
+      "payload_bytes": 65536,
+      "digest_bytes": 32,
+      "repeats": 1000,
+      "median_ns": 139050.7,
+      "iqr_ns": 1269.3999999999942,
+      "throughput_mib_s": 449.4763420824203
+    },
+    {
+      "algorithm": "blake2s-256",
+      "mode": "chunked",
+      "payload_bytes": 1048576,
+      "digest_bytes": 32,
+      "repeats": 100,
+      "median_ns": 2221379.0,
+      "iqr_ns": 5755.0,
+      "throughput_mib_s": 450.1708173166308
+    },
+    {
+      "algorithm": "md5",
+      "mode": "whole",
+      "payload_bytes": 64,
+      "digest_bytes": 16,
+      "repeats": 1000,
+      "median_ns": 830.9,
+      "iqr_ns": 3.0,
+      "throughput_mib_s": 73.45668100854495
+    },
+    {
+      "algorithm": "md5",
+      "mode": "whole",
+      "payload_bytes": 1024,
+      "digest_bytes": 16,
+      "repeats": 1000,
+      "median_ns": 1846.9,
+      "iqr_ns": 18.200000000000045,
+      "throughput_mib_s": 528.7576479506199
+    },
+    {
+      "algorithm": "md5",
+      "mode": "whole",
+      "payload_bytes": 65536,
+      "digest_bytes": 16,
+      "repeats": 1000,
+      "median_ns": 70917.7,
+      "iqr_ns": 309.6999999999971,
+      "throughput_mib_s": 881.30325715583
+    },
+    {
+      "algorithm": "md5",
+      "mode": "whole",
+      "payload_bytes": 1048576,
+      "digest_bytes": 16,
+      "repeats": 100,
+      "median_ns": 1122368.0,
+      "iqr_ns": 3052.0,
+      "throughput_mib_s": 890.9733705878999
+    },
+    {
+      "algorithm": "md5",
+      "mode": "chunked",
+      "payload_bytes": 64,
+      "digest_bytes": 16,
+      "repeats": 1000,
+      "median_ns": 864.8,
+      "iqr_ns": 9.700000000000045,
+      "throughput_mib_s": 70.57719270351527
+    },
+    {
+      "algorithm": "md5",
+      "mode": "chunked",
+      "payload_bytes": 1024,
+      "digest_bytes": 16,
+      "repeats": 1000,
+      "median_ns": 1883.5,
+      "iqr_ns": 13.399999999999864,
+      "throughput_mib_s": 518.4828776214495
+    },
+    {
+      "algorithm": "md5",
+      "mode": "chunked",
+      "payload_bytes": 65536,
+      "digest_bytes": 16,
+      "repeats": 1000,
+      "median_ns": 71220.7,
+      "iqr_ns": 226.6999999999971,
+      "throughput_mib_s": 877.5538572353263
+    },
+    {
+      "algorithm": "md5",
+      "mode": "chunked",
+      "payload_bytes": 1048576,
+      "digest_bytes": 16,
+      "repeats": 100,
+      "median_ns": 1127827.0,
+      "iqr_ns": 2830.0,
+      "throughput_mib_s": 886.6608087942566
+    },
+    {
+      "algorithm": "sha1",
+      "mode": "whole",
+      "payload_bytes": 64,
+      "digest_bytes": 20,
+      "repeats": 1000,
+      "median_ns": 738.0,
+      "iqr_ns": 2.199999999999932,
+      "throughput_mib_s": 82.70346375338754
+    },
+    {
+      "algorithm": "sha1",
+      "mode": "whole",
+      "payload_bytes": 1024,
+      "digest_bytes": 20,
+      "repeats": 1000,
+      "median_ns": 1159.5,
+      "iqr_ns": 1.300000000000182,
+      "throughput_mib_s": 842.2272531263476
+    },
+    {
+      "algorithm": "sha1",
+      "mode": "whole",
+      "payload_bytes": 65536,
+      "digest_bytes": 20,
+      "repeats": 1000,
+      "median_ns": 30162.4,
+      "iqr_ns": 57.70000000000073,
+      "throughput_mib_s": 2072.1162772193193
+    },
+    {
+      "algorithm": "sha1",
+      "mode": "whole",
+      "payload_bytes": 1048576,
+      "digest_bytes": 20,
+      "repeats": 100,
+      "median_ns": 471009.0,
+      "iqr_ns": 1060.0,
+      "throughput_mib_s": 2123.101681708842
+    },
+    {
+      "algorithm": "sha1",
+      "mode": "chunked",
+      "payload_bytes": 64,
+      "digest_bytes": 20,
+      "repeats": 1000,
+      "median_ns": 771.8,
+      "iqr_ns": 14.299999999999955,
+      "throughput_mib_s": 79.08157067893237
+    },
+    {
+      "algorithm": "sha1",
+      "mode": "chunked",
+      "payload_bytes": 1024,
+      "digest_bytes": 20,
+      "repeats": 1000,
+      "median_ns": 1196.8,
+      "iqr_ns": 1.1000000000001364,
+      "throughput_mib_s": 815.9780247326204
+    },
+    {
+      "algorithm": "sha1",
+      "mode": "chunked",
+      "payload_bytes": 65536,
+      "digest_bytes": 20,
+      "repeats": 1000,
+      "median_ns": 30431.4,
+      "iqr_ns": 104.29999999999927,
+      "throughput_mib_s": 2053.7996937373896
+    },
+    {
+      "algorithm": "sha1",
+      "mode": "chunked",
+      "payload_bytes": 1048576,
+      "digest_bytes": 20,
+      "repeats": 100,
+      "median_ns": 477005.0,
+      "iqr_ns": 5197.0,
+      "throughput_mib_s": 2096.4140837098143
+    }
+  ],
+  "avalanche": [
+    {
+      "algorithm": "sha256",
+      "input_bytes": 1024,
+      "trials": 100,
+      "digest_bits": 256,
+      "min_flipped_bits": 110,
+      "max_flipped_bits": 148,
+      "mean_flipped_bits": 128.2,
+      "mean_fraction": 0.50078125
+    },
+    {
+      "algorithm": "sha512",
+      "input_bytes": 1024,
+      "trials": 100,
+      "digest_bits": 512,
+      "min_flipped_bits": 231,
+      "max_flipped_bits": 282,
+      "mean_flipped_bits": 256.03,
+      "mean_fraction": 0.50005859375
+    },
+    {
+      "algorithm": "sha3-256",
+      "input_bytes": 1024,
+      "trials": 100,
+      "digest_bits": 256,
+      "min_flipped_bits": 109,
+      "max_flipped_bits": 149,
+      "mean_flipped_bits": 128.75,
+      "mean_fraction": 0.5029296875
+    },
+    {
+      "algorithm": "blake2b-256",
+      "input_bytes": 1024,
+      "trials": 100,
+      "digest_bits": 256,
+      "min_flipped_bits": 105,
+      "max_flipped_bits": 144,
+      "mean_flipped_bits": 127.19,
+      "mean_fraction": 0.4968359375
+    },
+    {
+      "algorithm": "blake2s-256",
+      "input_bytes": 1024,
+      "trials": 100,
+      "digest_bits": 256,
+      "min_flipped_bits": 111,
+      "max_flipped_bits": 147,
+      "mean_flipped_bits": 127.74,
+      "mean_fraction": 0.498984375
+    },
+    {
+      "algorithm": "md5",
+      "input_bytes": 1024,
+      "trials": 100,
+      "digest_bits": 128,
+      "min_flipped_bits": 53,
+      "max_flipped_bits": 84,
+      "mean_flipped_bits": 64.39,
+      "mean_fraction": 0.503046875
+    },
+    {
+      "algorithm": "sha1",
+      "input_bytes": 1024,
+      "trials": 100,
+      "digest_bits": 160,
+      "min_flipped_bits": 62,
+      "max_flipped_bits": 100,
+      "mean_flipped_bits": 79.6,
+      "mean_fraction": 0.49749999999999994
+    }
+  ],
+  "checks": [
+    {
+      "algorithm": "sha256",
+      "name": "known-abc",
+      "passed": true
+    },
+    {
+      "algorithm": "sha256",
+      "name": "known-empty",
+      "passed": true
+    },
+    {
+      "algorithm": "sha256",
+      "name": "unicode-utf8",
+      "passed": true
+    },
+    {
+      "algorithm": "sha256",
+      "name": "determinism",
+      "passed": true
+    },
+    {
+      "algorithm": "sha256",
+      "name": "digest-length",
+      "passed": true
+    },
+    {
+      "algorithm": "sha256",
+      "name": "stream-equivalence",
+      "passed": true
+    },
+    {
+      "algorithm": "sha512",
+      "name": "known-abc",
+      "passed": true
+    },
+    {
+      "algorithm": "sha512",
+      "name": "known-empty",
+      "passed": true
+    },
+    {
+      "algorithm": "sha512",
+      "name": "unicode-utf8",
+      "passed": true
+    },
+    {
+      "algorithm": "sha512",
+      "name": "determinism",
+      "passed": true
+    },
+    {
+      "algorithm": "sha512",
+      "name": "digest-length",
+      "passed": true
+    },
+    {
+      "algorithm": "sha512",
+      "name": "stream-equivalence",
+      "passed": true
+    },
+    {
+      "algorithm": "sha3-256",
+      "name": "known-abc",
+      "passed": true
+    },
+    {
+      "algorithm": "sha3-256",
+      "name": "known-empty",
+      "passed": true
+    },
+    {
+      "algorithm": "sha3-256",
+      "name": "unicode-utf8",
+      "passed": true
+    },
+    {
+      "algorithm": "sha3-256",
+      "name": "determinism",
+      "passed": true
+    },
+    {
+      "algorithm": "sha3-256",
+      "name": "digest-length",
+      "passed": true
+    },
+    {
+      "algorithm": "sha3-256",
+      "name": "stream-equivalence",
+      "passed": true
+    },
+    {
+      "algorithm": "blake2b-256",
+      "name": "known-abc",
+      "passed": true
+    },
+    {
+      "algorithm": "blake2b-256",
+      "name": "known-empty",
+      "passed": true
+    },
+    {
+      "algorithm": "blake2b-256",
+      "name": "unicode-utf8",
+      "passed": true
+    },
+    {
+      "algorithm": "blake2b-256",
+      "name": "determinism",
+      "passed": true
+    },
+    {
+      "algorithm": "blake2b-256",
+      "name": "digest-length",
+      "passed": true
+    },
+    {
+      "algorithm": "blake2b-256",
+      "name": "stream-equivalence",
+      "passed": true
+    },
+    {
+      "algorithm": "blake2s-256",
+      "name": "known-abc",
+      "passed": true
+    },
+    {
+      "algorithm": "blake2s-256",
+      "name": "known-empty",
+      "passed": true
+    },
+    {
+      "algorithm": "blake2s-256",
+      "name": "unicode-utf8",
+      "passed": true
+    },
+    {
+      "algorithm": "blake2s-256",
+      "name": "determinism",
+      "passed": true
+    },
+    {
+      "algorithm": "blake2s-256",
+      "name": "digest-length",
+      "passed": true
+    },
+    {
+      "algorithm": "blake2s-256",
+      "name": "stream-equivalence",
+      "passed": true
+    },
+    {
+      "algorithm": "md5",
+      "name": "known-abc",
+      "passed": true
+    },
+    {
+      "algorithm": "md5",
+      "name": "known-empty",
+      "passed": true
+    },
+    {
+      "algorithm": "md5",
+      "name": "unicode-utf8",
+      "passed": true
+    },
+    {
+      "algorithm": "md5",
+      "name": "determinism",
+      "passed": true
+    },
+    {
+      "algorithm": "md5",
+      "name": "digest-length",
+      "passed": true
+    },
+    {
+      "algorithm": "md5",
+      "name": "stream-equivalence",
+      "passed": true
+    },
+    {
+      "algorithm": "sha1",
+      "name": "known-abc",
+      "passed": true
+    },
+    {
+      "algorithm": "sha1",
+      "name": "known-empty",
+      "passed": true
+    },
+    {
+      "algorithm": "sha1",
+      "name": "unicode-utf8",
+      "passed": true
+    },
+    {
+      "algorithm": "sha1",
+      "name": "determinism",
+      "passed": true
+    },
+    {
+      "algorithm": "sha1",
+      "name": "digest-length",
+      "passed": true
+    },
+    {
+      "algorithm": "sha1",
+      "name": "stream-equivalence",
+      "passed": true
+    }
+  ]
+}
