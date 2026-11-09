@@ -1,0 +1,3 @@
+# Working SQLite storage is local only: never commit the database or its -wal/-shm/-journal files.
+*
+!.gitignore
